@@ -64,6 +64,8 @@ class Root {
 
 // Animated paintbrush
 window.addEventListener('mousemove', function(e){
-    const root = new Root(e.x, e.y);        // Create new root object
-    root.update();
+    for (let i = 0; i < 3; i++) {
+        const root = new Root(e.x, e.y);        // Create new root object
+        root.update();
+    }
 })
