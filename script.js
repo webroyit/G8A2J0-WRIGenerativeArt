@@ -39,6 +39,7 @@ class Root {
             ctx.fillStyle = 'hsl(140, 100%, 50%)';      // Add green color
             ctx.fill();         // Apply color
             ctx.stroke();       // Give it border
+            requestAnimationFrame(this.update.bind(this));      // Call update() again
         }
     }
 }
