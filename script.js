@@ -21,16 +21,29 @@ class Root {
         this.maxSize = Math.random() * 7 + 5;
 
         this.size = Math.random() * 1 + 2;
+        this.vs = Math.random() * 0.2 + 0.05;          // Velocity of Size
+        
+        // Velocity of angle on x-axis
+        this.angleX = Math.random() * 6.2;
+        this.vax = Math.random() * 0.6 - 0.3;
+
+         // Velocity of angle on y-axis
+        this.angleY = Math.random() * 6.2;
+        this.vay = Math.random() * 0.6 - 0.3;
     }
 
     // Create a random vector(direction and speed of movement for each individual root particle)
     update() {
         // Move the root
-        this.x += this.speedX;
-        this.y += this.speedY;
+        this.x += this.speedX + Math.sin(this.angleX);
+        this.y += this.speedY + Math.sin(this.angleY);
 
         // Increase its size
-        this.size += 0.1;
+        this.size += this.vs;       
+
+        // Change direction of its angle
+        this.angleX += this.vax;
+        this.angleY += this.vay;
 
         // Make it grow
         if (this.size < this.maxSize) {
