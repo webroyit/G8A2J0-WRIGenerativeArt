@@ -30,6 +30,8 @@ class Root {
          // Velocity of angle on y-axis
         this.angleY = Math.random() * 6.2;
         this.vay = Math.random() * 0.6 - 0.3;
+
+        this.lightness = 10;
     }
 
     // Create a random vector(direction and speed of movement for each individual root particle)
@@ -45,11 +47,14 @@ class Root {
         this.angleX += this.vax;
         this.angleY += this.vay;
 
+        // Change color
+        if (this.lightness < 70) this.lightness += 0.6;
+
         // Make it grow
         if (this.size < this.maxSize) {
             ctx.beginPath();        // Start drawing
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);     // Draw a circle
-            ctx.fillStyle = 'hsl(140, 100%, 50%)';      // Add green color
+            ctx.fillStyle = `hsl(140, 100%, ${this.lightness}%)`;      // Add green color
             ctx.fill();         // Apply color
             ctx.stroke();       // Give it border
             requestAnimationFrame(this.update.bind(this));      // Call update() again
