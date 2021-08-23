@@ -73,16 +73,51 @@ class Flower {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.maxFlowerSize = this.size + Math.random() * 50;
+        this.vs = Math.random() * 0.3 + 0.2;
+        this.maxFlowerSize = this.size + Math.random() * 100;
         this.image = new Image();
         this.image.src = 'flowers.png';
+        this.fameSize = 100;        // flower.png is 300px, 300px / 3 (3 rows)
+        
+        // Show differnet flower
+        this.frameX = Math.floor(Math.random() * 3);
+        this.frameY = Math.floor(Math.random() * 3);
+
+        // Draw the flower only on largest root
+        this.size > 11.5 ? this.willFlower = true : this.willFlower = false;
     }
 
     grow() {
-        if (this.size < this.maxFlowerSize) {
-            this.size += 0.3;
+        if (this.size < this.maxFlowerSize && this.willFlower) {
+            this.size += this.vs;
+
+            // sx => scoure image x-axis
+            // sy => scoure image x-axis
+            // sw => scoure image width
+            // sh => scoure image height
+            ctx.drawImage(
+                // flower.png
+                this.image,
+
+                // Chop the image
+                this.fameSize * this.frameX,
+                this.fameSize * this.frameY,
+
+                this.fameSize,
+                this.fameSize,
+
+                // Center the flower image
+                this.x - this.size / 2,
+                this.y - this.size / 2,
+
+                // Size of the flower
+                this.size,
+                this.size
+            );
+
+            requestAnimationFrame(this.grow.bind(this));
         }
-        ctx.drawImage(this.image, this.x, this.y);
+        
     }
 }
 
