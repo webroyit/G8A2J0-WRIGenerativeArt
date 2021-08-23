@@ -60,7 +60,29 @@ class Root {
             ctx.fill();         // Apply color
             ctx.stroke();       // Give it border
             requestAnimationFrame(this.update.bind(this));      // Call update() again
+        } else {
+            // Add flower
+            const flower = new Flower(this.x, this.y, this.size);
+            flower.grow();
         }
+    }
+}
+
+class Flower {
+    constructor(x, y, size) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.maxFlowerSize = this.size + Math.random() * 50;
+        this.image = new Image();
+        this.image.src = 'flowers.png';
+    }
+
+    grow() {
+        if (this.size < this.maxFlowerSize) {
+            this.size += 0.3;
+        }
+        ctx.drawImage(this.image, this.x, this.y);
     }
 }
 
