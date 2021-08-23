@@ -7,6 +7,8 @@ const ctx = canvas.getContext("2d");        // For 2D Drawing
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+let drawing = false;
+
 // Attach the initial growth points to the current mouse x and y coordinates
 class Root {
     constructor(x, y) {
@@ -64,8 +66,20 @@ class Root {
 
 // Animated paintbrush
 window.addEventListener('mousemove', function(e){
-    for (let i = 0; i < 3; i++) {
-        const root = new Root(e.x, e.y);        // Create new root object
-        root.update();
+    if (drawing) {
+        for (let i = 0; i < 3; i++) {
+            const root = new Root(e.x, e.y);        // Create new root object
+            root.update();
+        }
     }
+})
+
+// Start drawing when right click on the mouse
+window.addEventListener('mousedown', function(){
+    drawing = true;
+})
+
+// Stop drawing when letting go right click of the mouse
+window.addEventListener('mouseup', function(){
+    drawing = false;
 })
