@@ -8,6 +8,8 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let drawing = false;
+ctx.lineWidth = 0.4;
+//ctx.globalCompositeOperation = 'lighten';         // Watercolors effect
 
 // Attach the initial growth points to the current mouse x and y coordinates
 class Root {
@@ -143,8 +145,12 @@ window.addEventListener('mousemove', function(e){
 })
 
 // Start drawing when right click on the mouse
-window.addEventListener('mousedown', function(){
+window.addEventListener('mousedown', function(e){
     drawing = true;
+    for (let i = 0; i < 30; i++) {
+        const root = new Root(e.x, e.y);        // Create new root object
+        root.update();
+    }
 })
 
 // Stop drawing when letting go right click of the mouse
