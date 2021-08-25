@@ -85,11 +85,20 @@ class Flower {
 
         // Draw the flower only on largest root
         this.size > 11.5 ? this.willFlower = true : this.willFlower = false;
+        
+        
+        this.angle = 0;         // Initial rotation
+        this.va = Math.random() * 0.05 - 0.025;      // Velocity of Angle
     }
-
+    
     grow() {
         if (this.size < this.maxFlowerSize && this.willFlower) {
             this.size += this.vs;
+            this.angle += this.va;
+
+            ctx.save();     // Save the current canvas setting
+            ctx.translate(this.x, this.y);      // Move the flowers based on coordinates
+            ctx.rotate(this.angle);     // Rotate the flowers
 
             // sx => scoure image x-axis
             // sy => scoure image x-axis
@@ -107,13 +116,15 @@ class Flower {
                 this.fameSize,
 
                 // Center the flower image
-                this.x - this.size / 2,
-                this.y - this.size / 2,
+                0 - this.size / 2,
+                0 - this.size / 2,
 
                 // Size of the flower
                 this.size,
                 this.size
             );
+
+            ctx.restore();      // Reset the canvas setting to what they were initially
 
             requestAnimationFrame(this.grow.bind(this));
         }
