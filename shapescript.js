@@ -22,10 +22,10 @@ class Root {
         this.speedY = Math.random() * 4 - 2;
 
         // How much it can grow
-        this.maxSize = Math.random() * 7 + 5;
+        this.maxSize = Math.random() * 7 + 20;
 
         this.size = Math.random() * 1 + 2;
-        this.vs = Math.random() * 0.2 + 0.05;          // Velocity of Size
+        this.vs = Math.random() * 0.2 + 0.5;          // Velocity of Size
         
         // Velocity of angle on x-axis
         this.angleX = Math.random() * 6.2;
@@ -52,12 +52,14 @@ class Root {
         this.angleY += this.vay;
 
         // Change color
-        if (this.lightness < 70) this.lightness += 0.6;
+        if (this.lightness < 70) this.lightness += 0.25;
 
         // Make it grow
         if (this.size < this.maxSize) {
-            ctx.fillStyle = "#FFFSDE";      // Color
+            ctx.fillStyle = "#FFF5DE";      // Color
             ctx.fillRect(this.x, this.y, this.size, this.size);
+            ctx.strokeStyle = "#3c5186";
+            ctx.strokeRect(this.x, this.y, this.size, this.size);
             requestAnimationFrame(this.update.bind(this));      // Call update() again
         }
     }
