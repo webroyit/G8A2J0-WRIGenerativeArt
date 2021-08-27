@@ -8,8 +8,13 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let drawing = false;
-ctx.lineWidth = 0.4;
+ctx.fillStyle = "#FFF5DE";      // Color
+ctx.shadowOffsetX = 0;
+ctx.shadowOffsetY = 10;
+ctx.shadowBlur = 10;
+ctx.shadowColor = "rgba(0, 100, 0, .5)";
 //ctx.globalCompositeOperation = 'lighten';         // Watercolors effect
+ctx.globalCompositeOperation = 'destination-over';      // destination-over for backward
 
 // Attach the initial growth points to the current mouse x and y coordinates
 class Root {
@@ -24,7 +29,7 @@ class Root {
         // How much it can grow
         this.maxSize = Math.random() * 7 + 20;
 
-        this.size = Math.random() * 1 + 2;
+        this.size = 0;
         this.vs = Math.random() * 0.2 + 0.5;          // Velocity of Size
         
         // Velocity of angle on x-axis
@@ -62,10 +67,16 @@ class Root {
             ctx.save();     // Save the current canvas setting
             ctx.translate(this.x, this.y);      // Move the rectangle based on coordinates
             ctx.rotate(this.angle);     // Rotate the flowers
-            ctx.fillStyle = "#FFF5DE";      // Color
-            ctx.fillRect(0, 0, this.size, this.size);
-            ctx.strokeStyle = "#3c5186";
-            ctx.strokeRect(0, 0, this.size, this.size);
+            ctx.fillRect(0 - this.size / 2, 0 - this.size / 2, this.size, this.size);
+            let double = this.size * 2;
+            ctx.lineWidth = 0.5;      // Width of rectangle border
+            /*ctx.strokeStyle = "#3c5186";
+            ctx.strokeRect(0 - double / 2, 0 - double / 2, double, double);
+            let triple =  this.size * 3;
+            ctx.lineWidth = 0.1;      // Width of rectangle border
+            ctx.strokeStyle = "white";
+            ctx.strokeRect(0 - triple / 2, 0 - triple / 2, triple, triple);*/
+            
             requestAnimationFrame(this.update.bind(this));      // Call update() again
             ctx.restore();      // Reset the canvas setting to what they were initially
         }
@@ -85,7 +96,7 @@ window.addEventListener('mousemove', function(e){
 // Start drawing when right click on the mouse
 window.addEventListener('mousedown', function(e){
     drawing = true;
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 20; i++) {
         const root = new Root(e.x, e.y);        // Create new root object
         root.update();
     }
