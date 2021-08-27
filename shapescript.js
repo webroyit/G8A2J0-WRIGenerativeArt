@@ -34,7 +34,9 @@ class Root {
          // Velocity of angle on y-axis
         this.angleY = Math.random() * 6.2;
         this.vay = Math.random() * 0.6 - 0.3;
-
+        
+        this.angle = 0;         // Initial rotation
+        this.va = Math.random() * 0.02 - 0.05;      // Velocity of Angle
         this.lightness = 10;
     }
 
@@ -50,17 +52,22 @@ class Root {
         // Change direction of its angle
         this.angleX += this.vax;
         this.angleY += this.vay;
+        this.angle += this.va;
 
         // Change color
         if (this.lightness < 70) this.lightness += 0.25;
 
         // Make it grow
         if (this.size < this.maxSize) {
+            ctx.save();     // Save the current canvas setting
+            ctx.translate(this.x, this.y);      // Move the rectangle based on coordinates
+            ctx.rotate(this.angle);     // Rotate the flowers
             ctx.fillStyle = "#FFF5DE";      // Color
-            ctx.fillRect(this.x, this.y, this.size, this.size);
+            ctx.fillRect(0, 0, this.size, this.size);
             ctx.strokeStyle = "#3c5186";
-            ctx.strokeRect(this.x, this.y, this.size, this.size);
+            ctx.strokeRect(0, 0, this.size, this.size);
             requestAnimationFrame(this.update.bind(this));      // Call update() again
+            ctx.restore();      // Reset the canvas setting to what they were initially
         }
     }
 }
